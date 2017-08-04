@@ -24,6 +24,10 @@ NSURL *getCertAtHost(NSString *host) {
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         NSString *host = [NSString stringWithFormat:@"%s",argv[1]];
+        if (![host containsString:@"."]) {
+            NSLog(@"need host");
+            return 0;
+        }
         NSURL *certUrl = getCertAtHost(host);
         //        NSLog(@"%@",certString);
 

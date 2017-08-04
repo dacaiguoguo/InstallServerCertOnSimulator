@@ -23,7 +23,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		9DDCE2F51F344A7800BB46B1 /* InstallServerCertOnSimulator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = InstallServerCertOnSimulator; sourceTree = BUILT_PRODUCTS_DIR; };
+		9DDCE2F51F344A7800BB46B1 /* icer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = icer; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DDCE2F81F344A7800BB46B1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -49,7 +49,7 @@
 		9DDCE2F61F344A7800BB46B1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9DDCE2F51F344A7800BB46B1 /* InstallServerCertOnSimulator */,
+				9DDCE2F51F344A7800BB46B1 /* icer */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -65,9 +65,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		9DDCE2F41F344A7800BB46B1 /* InstallServerCertOnSimulator */ = {
+		9DDCE2F41F344A7800BB46B1 /* icer */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9DDCE2FC1F344A7800BB46B1 /* Build configuration list for PBXNativeTarget "InstallServerCertOnSimulator" */;
+			buildConfigurationList = 9DDCE2FC1F344A7800BB46B1 /* Build configuration list for PBXNativeTarget "icer" */;
 			buildPhases = (
 				9DDCE2F11F344A7800BB46B1 /* Sources */,
 				9DDCE2F21F344A7800BB46B1 /* Frameworks */,
@@ -77,9 +77,9 @@
 			);
 			dependencies = (
 			);
-			name = InstallServerCertOnSimulator;
+			name = icer;
 			productName = InstallServerCertOnSimulator;
-			productReference = 9DDCE2F51F344A7800BB46B1 /* InstallServerCertOnSimulator */;
+			productReference = 9DDCE2F51F344A7800BB46B1 /* icer */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -110,7 +110,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				9DDCE2F41F344A7800BB46B1 /* InstallServerCertOnSimulator */,
+				9DDCE2F41F344A7800BB46B1 /* icer */,
 			);
 		};
 /* End PBXProject section */
@@ -219,7 +219,9 @@
 		9DDCE2FD1F344A7800BB46B1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEPLOYMENT_LOCATION = YES;
 				DEVELOPMENT_TEAM = KB7B8SQENU;
+				DSTROOT = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -227,7 +229,9 @@
 		9DDCE2FE1F344A7800BB46B1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEPLOYMENT_LOCATION = YES;
 				DEVELOPMENT_TEAM = KB7B8SQENU;
+				DSTROOT = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -244,13 +248,14 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9DDCE2FC1F344A7800BB46B1 /* Build configuration list for PBXNativeTarget "InstallServerCertOnSimulator" */ = {
+		9DDCE2FC1F344A7800BB46B1 /* Build configuration list for PBXNativeTarget "icer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9DDCE2FD1F344A7800BB46B1 /* Debug */,
 				9DDCE2FE1F344A7800BB46B1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
