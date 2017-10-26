@@ -1,28 +1,34 @@
 # InstallServerCertOnSimulator
-# 安装测试环境的证书到模拟器的辅助工具
-# 安装方法 编译即安装到 `/usr/loca/bin`
-# 使用方法 `icer 指定host`例如 `icer m.lvmama.com`这时模拟器会跳转到设置里的描述文件安装页面，按照提示操作即可 
-# 代码实现步骤
- 1.下载证书  
- 2.启动模拟器  
- 3.模拟器中打开证书  
+# 一、安装测试环境的证书到模拟器的辅助工具
+### 安装方法 编译即安装到 `/usr/loca/bin`
+### 使用方法 `icer 指定host`例如 `icer m.lvmama.com`这时模拟器会跳转到设置里的描述文件安装页面，按照提示操作即可 
+### 代码实现步骤
+ 1.下载证书   
+ 2.启动模拟器   
+ 3.模拟器中打开证书   
 
 
-# addCert.sh 说明
-把测试环境证书添加到模拟器的信任证书列表
-参考的是Charles的安装脚本（/Applications/Charles.app/Contents/Resources/install-charles-ca-cert-for-iphone-simulator.sh）
+# 二、添加addCert.sh 说明
+
+把测试环境证书添加到模拟器的信任证书列表  
+参考的是Charles的安装脚本（/Applications/Charles.app/Contents/Resources/install-charles-ca-cert-for-iphone-simulator.sh）  
 ## 使用方法
-1.复制addCert.sh的内容到终端执行
-2.重启模拟器生效
+1.复制addCert.sh的内容  
+或者  
+`curl -o- -fsSL http://192.168.0.96/debugapps/addCert.sh | zsh`
+到终端执行  
+2.重启模拟器生效  
+注意：需要把模拟器设置里的证书删除
+
 ## 脚本内容解释
 ```
-1.for循环找出所有的信任列表数据库
+1. for循环找出所有的信任列表数据库
 for SQLITEDBPATH in ~/Library/Developer/CoreSimulator/Devices/*/data/Library/Keychains/TrustStore.sqlite3
 do
 if [ -f "$SQLITEDBPATH" ]; then
-2.如果文件存在，则执行SQL语句
+2. 如果文件存在，则执行SQL语句
 sqlite3 "$SQLITEDBPATH" <<EOF
-2.1往tsettings表中插入一条数据
+2.1 往tsettings表中插入一条数据
 数据前有X，代表为hex的数据表示，即获取相应的数据后需要转化成hex形式
 sha1获取方式如下，获取后把冒号去掉
 openssl x509 -sha1 -in cert.pem -noout -fingerprint
@@ -36,9 +42,6 @@ INSERT INTO "tsettings" VALUES(X'sha1',X'subject',X'tset',X'data');
 EOF
 fi
 done
-3.重复执行会提示
-Error: near line 1: UNIQUE constraint failed: tsettings.sha1
-说明tsettings表sha1是不能重复的
 ```
 
 
