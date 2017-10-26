@@ -1015,42 +1015,45 @@ body .markdown-body
   }
 }
 </style><title>README</title></head><body><article class="markdown-body"><h1 id="installservercertonsimulator"><a name="user-content-installservercertonsimulator" href="#installservercertonsimulator" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>InstallServerCertOnSimulator</h1>
-<h1 id="_1"><a name="user-content-_1" href="#_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>一、安装测试环境的证书到模拟器的辅助工具</h1>
+<h1 id="_1"><a name="user-content-_1" href="#_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>一、安装测试环境的证书到模拟器的辅助工具 （部分情况有问题）</h1>
 <h3 id="usrlocabin"><a name="user-content-usrlocabin" href="#usrlocabin" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>安装方法 编译即安装到 <code>/usr/loca/bin</code></h3>
 <h3 id="icer-host-icer-mlvmamacom"><a name="user-content-icer-host-icer-mlvmamacom" href="#icer-host-icer-mlvmamacom" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>使用方法 <code>icer 指定host</code>例如 <code>icer m.lvmama.com</code>这时模拟器会跳转到设置里的描述文件安装页面，按照提示操作即可</h3>
 <h3 id="_2"><a name="user-content-_2" href="#_2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>代码实现步骤</h3>
 <p>1.下载证书 <br />
  2.启动模拟器 <br />
  3.模拟器中打开证书   </p>
-<h1 id="addcertsh"><a name="user-content-addcertsh" href="#addcertsh" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>二、添加addCert.sh 说明</h1>
-<p>把测试环境证书添加到模拟器的信任证书列表<br />
-参考的是Charles的安装脚本（/Applications/Charles.app/Contents/Resources/install-charles-ca-cert-for-iphone-simulator.sh）  </p>
-<h2 id="_3"><a name="user-content-_3" href="#_3" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>使用方法</h2>
+<h1 id="_3"><a name="user-content-_3" href="#_3" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>二、把测试环境证书添加到模拟器的信任证书列表 (推荐)</h1>
+<p>参考的是Charles的安装脚本（/Applications/Charles.app/Contents/Resources/install-charles-ca-cert-for-iphone-simulator.sh）  </p>
+<h2 id="_4"><a name="user-content-_4" href="#_4" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>使用方法</h2>
 <p>1.复制addCert.sh的内容<br />
 或者<br />
 <code>curl -o- -fsSL http://192.168.0.96/debugapps/addCert.sh | zsh</code><br />
 到终端执行<br />
 2.重启模拟器生效<br />
 注意：需要把模拟器设置里的证书删除</p>
-<h2 id="_4"><a name="user-content-_4" href="#_4" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>脚本内容解释</h2>
-<pre><code>1. for循环找出所有的信任列表数据库
-for SQLITEDBPATH in ~/Library/Developer/CoreSimulator/Devices/*/data/Library/Keychains/TrustStore.sqlite3
+<h2 id="_5"><a name="user-content-_5" href="#_5" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>脚本内容解释</h2>
+<h4 id="1-for"><a name="user-content-1-for" href="#1-for" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>1. for循环找出所有的信任列表数据库</h4>
+<pre><code>for SQLITEDBPATH in ~/Library/Developer/CoreSimulator/Devices/*/data/Library/Keychains/TrustStore.sqlite3
 do
-if [ -f &quot;$SQLITEDBPATH&quot; ]; then
-2. 如果文件存在，则执行SQL语句
+
+</code></pre>
+
+<h4 id="2-sql"><a name="user-content-2-sql" href="#2-sql" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>2. 如果文件存在，则执行SQL语句</h4>
+<pre><code>if [ -f &quot;$SQLITEDBPATH&quot; ]; then
 sqlite3 &quot;$SQLITEDBPATH&quot; &lt;&lt;EOF
-2.1 往tsettings表中插入一条数据
-数据前有X，代表为hex的数据表示，即获取相应的数据后需要转化成hex形式
-sha1获取方式如下，获取后把冒号去掉
-openssl x509 -sha1 -in cert.pem -noout -fingerprint
+</code></pre>
+
+<h5 id="21-tsettings"><a name="user-content-21-tsettings" href="#21-tsettings" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>2.1 往tsettings表中插入一条数据</h5>
+<p>数据前有X，代表为hex的数据表示，即获取相应的数据后需要转化成hex形式</p>
+<h5 id="22-sha1"><a name="user-content-22-sha1" href="#22-sha1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>2.2 sha1获取方式如下，获取后把冒号去掉</h5>
+<pre><code>openssl x509 -sha1 -in cert.pem -noout -fingerprint
 SHA1 Fingerprint=44:69:2D:2B:43:E2:45:81:97:DE:96:BC:AF:46:30:1F:0D:DC:56:C9
-subject获取方式如下，获取后转化成hex格式
-openssl x509 -sha1 -in cert.pem -noout -subject                                                 
+</code></pre>
+
+<h5 id="23-subjecthex"><a name="user-content-23-subjecthex" href="#23-subjecthex" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>2.3 subject获取方式如下，获取后转化成hex格式</h5>
+<pre><code>openssl x509 -sha1 -in cert.pem -noout -subject                                                 
 subject= /C=CN/ST=shanghai/L=shanghai/O=lvmama/OU=lvtu/CN=*.lvmama.com/emailAddress=lvtu_deploy@lvmama.com
-tset是固定内容
-data获取方式，如果证书是pem格式，需要转化成cer格式，再转化成hex形式
-INSERT INTO &quot;tsettings&quot; VALUES(X'sha1',X'subject',X'tset',X'data');
-EOF
-fi
-done
-</code></pre></article></body></html>
+</code></pre>
+
+<h5 id="24-tset"><a name="user-content-24-tset" href="#24-tset" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>2.4 tset是固定内容</h5>
+<h5 id="25-datapemcerhex"><a name="user-content-25-datapemcerhex" href="#25-datapemcerhex" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>2.5 data获取方式，如果证书是pem格式，需要转化成cer格式，再转化成hex形式</h5></article></body></html>
