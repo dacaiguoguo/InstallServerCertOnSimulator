@@ -77,18 +77,18 @@ int main(int argc, const char * argv[]) {
 
         //执行先删除后插入命令
         NSString *insertCommand = [NSString stringWithFormat:
-                                   @"for SQLITEDBPATH in ~/Library/Developer/CoreSimulator/Devices/*/data/Library/Keychains/TrustStore.sqlite3\n\
-                                   do\n\
-                                   if [ -f \"$SQLITEDBPATH\" ]; then\n\
-                                   echo $SQLITEDBPATH\n\
-                                   sqlite3 \"$SQLITEDBPATH\" <<EOF\n\
-                                   DELETE FROM tsettings WHERE sha1 = X'%@';\n\
-                                   EOF\n\
-                                   sqlite3 \"$SQLITEDBPATH\" <<EOF\n\
-                                   INSERT INTO \"tsettings\" VALUES(X'%@',X'%@',X'%@',X'%@');      \n\
-                                   EOF\n\
-                                   fi\n\
-                                   done", sha1Value, sha1Value, subjectContentString, tset, dataString];
+@"for SQLITEDBPATH in ~/Library/Developer/CoreSimulator/Devices/*/data/Library/Keychains/TrustStore.sqlite3\n\
+do\n\
+if [ -f \"$SQLITEDBPATH\" ]; then\n\
+echo $SQLITEDBPATH\n\
+sqlite3 \"$SQLITEDBPATH\" <<EOF\n\
+DELETE FROM tsettings WHERE sha1 = X'%@';\n\
+EOF\n\
+sqlite3 \"$SQLITEDBPATH\" <<EOF\n\
+INSERT INTO \"tsettings\" VALUES(X'%@',X'%@',X'%@',X'%@');      \n\
+EOF\n\
+fi\n\
+done", sha1Value, sha1Value, subjectContentString, tset, dataString];
         NSLog(@"%@",insertCommand);
         outformRet = system([insertCommand UTF8String]);
 
