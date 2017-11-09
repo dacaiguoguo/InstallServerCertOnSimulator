@@ -9,10 +9,10 @@
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
 
-NSURL *getCertAtHost(NSString *host) {
+NSURL *getCertAtHost(NSString *host, NSString *outputPath) {
     NSString *logFileName = [host stringByAppendingString:@".cer"];
     NSString *logFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:logFileName];
-    NSArray *commandArray =  @[@"echo | openssl s_client -connect ", host, @":443 2>/dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > ", logFilePath];
+    NSArray *commandArray =  @[@"echo | openssl s_client -connect ", host, @":443 2>/dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > ", outputPath?:logFilePath];
     NSString *alllogFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[host stringByAppendingString:@"all.log"]];
     NSArray *allcommandArray =  @[@"echo | openssl s_client -connect ", host, @":443 2>/dev/null > ", alllogFilePath];
     NSString *allcommandString = [allcommandArray componentsJoinedByString:@""];
@@ -20,6 +20,10 @@ NSURL *getCertAtHost(NSString *host) {
     NSString *allContent = [NSString stringWithContentsOfFile:alllogFilePath encoding:NSUTF8StringEncoding error:nil];
     if (![allContent containsString:@"(self signed certificate)"]) {
         NSLog(@"not self signed certificate");
+        if (outputPath) {
+            NSString *commandString = [commandArray componentsJoinedByString:@""];
+            system([commandString UTF8String]);
+        }
         exit(1);
     }
 //添加自签名证书判断    (self signed certificate)
@@ -43,7 +47,11 @@ int main(int argc, const char * argv[]) {
             NSLog(@"need host");
             return 0;
         }
-        NSURL *certUrl = getCertAtHost(host);
+        NSString *outputPath = nil;
+        if (argc > 2) {
+            outputPath = [NSString stringWithFormat:@"%s",argv[2]];
+        }
+        NSURL *certUrl = getCertAtHost(host, outputPath);
 
         NSString *logFileName = [host stringByAppendingString:@".log"];
         NSString *logFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:logFileName];
