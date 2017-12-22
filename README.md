@@ -4,6 +4,8 @@
 ### 使用方法  
     1.配置host，例如 192.168.0.229  m.lvmama.com  
     2.`icer 指定host`例如 `icer m.lvmama.com`  
+    3.如果需要下载证书 `icer 指定host 指定路径`，  
+      例如`icer api3g2.lvmama.com ~/Desktop/lvmama2.cer`
 
 
 

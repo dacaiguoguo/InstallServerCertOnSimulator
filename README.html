@@ -1019,7 +1019,9 @@ body .markdown-body
 <h3 id="usrlocabin"><a name="user-content-usrlocabin" href="#usrlocabin" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>安装方法 编译即安装到 <code>/usr/loca/bin</code></h3>
 <h3 id="_2"><a name="user-content-_2" href="#_2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>使用方法</h3>
 <pre><code>1.配置host，例如 192.168.0.229  m.lvmama.com  
-2.`icer 指定host`例如 `icer m.lvmama.com`
+2.`icer 指定host`例如 `icer m.lvmama.com`  
+3.如果需要下载证书 `icer 指定host 指定路径`，  
+  例如`icer api3g2.lvmama.com ~/Desktop/lvmama2.cer`
 </code></pre>
 <h1 id="mlvmamacom"><a name="user-content-mlvmamacom" href="#mlvmamacom" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>二、把测试环境证书添加到模拟器的信任证书列表 (固定内容，m.lvmama.com测试环境的证书)</h1>
 <p>参考的是Charles的安装脚本（/Applications/Charles.app/Contents/Resources/install-charles-ca-cert-for-iphone-simulator.sh）  </p>
@@ -1030,7 +1032,7 @@ body .markdown-body
 到终端执行<br />
 2.重启模拟器生效<br />
 注意：需要把模拟器设置里的证书删除  </p>
-<h2 id="_4"><a name="user-content-_4" href="#_4" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>脚本内容解释</h2>
+<h2 id="_4"><a name="user-content-_4" href="#_4" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>三、脚本内容解释</h2>
 <h4 id="1-for"><a name="user-content-1-for" href="#1-for" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>1. for循环找出所有的信任列表数据库</h4>
 <pre><code>for SQLITEDBPATH in ~/Library/Developer/CoreSimulator/Devices/*/data/Library/Keychains/TrustStore.sqlite3
 do
