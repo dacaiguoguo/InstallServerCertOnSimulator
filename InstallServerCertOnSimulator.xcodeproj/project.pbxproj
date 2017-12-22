@@ -23,8 +23,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		9D89D4F91FAC6FB8002458FA /* cert.pem */ = {isa = PBXFileReference; lastKnownFileType = text; name = cert.pem; path = ../../../../Desktop/cert.pem; sourceTree = "<group>"; };
-		9D89D4FA1FAC71C1002458FA /* cert.cer */ = {isa = PBXFileReference; lastKnownFileType = file; name = cert.cer; path = ../../../../Desktop/cert.cer; sourceTree = "<group>"; };
 		9DDCE2F51F344A7800BB46B1 /* icer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = icer; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DDCE2F81F344A7800BB46B1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -59,8 +57,6 @@
 		9DDCE2F71F344A7800BB46B1 /* InstallServerCertOnSimulator */ = {
 			isa = PBXGroup;
 			children = (
-				9D89D4FA1FAC71C1002458FA /* cert.cer */,
-				9D89D4F91FAC6FB8002458FA /* cert.pem */,
 				9DDCE2F81F344A7800BB46B1 /* main.m */,
 			);
 			path = InstallServerCertOnSimulator;
