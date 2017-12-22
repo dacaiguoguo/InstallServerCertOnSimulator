@@ -1,14 +1,13 @@
 # InstallServerCertOnSimulator
-# 一、安装测试环境的证书到模拟器的辅助工具 （部分情况有问题）
-### 安装方法 编译即安装到 `/usr/loca/bin`
-### 使用方法 `icer 指定host`例如 `icer m.lvmama.com`这时模拟器会跳转到设置里的描述文件安装页面，按照提示操作即可 
-### 代码实现步骤
- 1.下载证书   
- 2.启动模拟器   
- 3.模拟器中打开证书   
+# 一、把测试环境证书添加到模拟器的信任证书列表（动态获取指定域名证书）
+### 安装方法 编译即安装到 `/usr/loca/bin`  
+### 使用方法  
+    1.配置host，例如 192.168.0.229  m.lvmama.com  
+    2.`icer 指定host`例如 `icer m.lvmama.com`  
 
 
-# 二、把测试环境证书添加到模拟器的信任证书列表 (推荐)
+
+# 二、把测试环境证书添加到模拟器的信任证书列表 (固定内容，m.lvmama.com测试环境的证书)
  
 参考的是Charles的安装脚本（/Applications/Charles.app/Contents/Resources/install-charles-ca-cert-for-iphone-simulator.sh）  
 ## 使用方法
@@ -17,7 +16,7 @@
 `curl -o- -fsSL http://192.168.0.96/debugapps/addCert.sh | zsh`
 到终端执行  
 2.重启模拟器生效  
-注意：需要把模拟器设置里的证书删除
+注意：需要把模拟器设置里的证书删除  
 
 ## 脚本内容解释
 
