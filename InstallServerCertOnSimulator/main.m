@@ -12,7 +12,10 @@
 NSURL *getCertAtHost(NSString *host, NSString *outputPath) {
     NSString *logFileName = [host stringByAppendingString:@".cer"];
     NSString *logFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:logFileName];
-    NSArray *commandArray =  @[@"echo | openssl s_client -connect ", host, @":443 2>/dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > ", outputPath?:logFilePath];
+    if (outputPath) {
+        logFilePath = outputPath.stringByStandardizingPath;
+    }
+    NSArray *commandArray =  @[@"echo | openssl s_client -connect ", host, @":443 2>/dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > ", logFilePath];
     NSString *alllogFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[host stringByAppendingString:@"all.log"]];
     NSArray *allcommandArray =  @[@"echo | openssl s_client -connect ", host, @":443 2>/dev/null > ", alllogFilePath];
     NSString *allcommandString = [allcommandArray componentsJoinedByString:@""];
@@ -27,10 +30,11 @@ NSURL *getCertAtHost(NSString *host, NSString *outputPath) {
         exit(1);
     }
 //添加自签名证书判断    (self signed certificate)
+
     NSString *commandString = [commandArray componentsJoinedByString:@""];
     system([commandString UTF8String]);
     NSURL *logFileUrl = [NSURL fileURLWithPath:logFilePath];
-    NSLog(@"%@",logFileUrl.absoluteString);
+    NSLog(@"%@",logFilePath);
     return logFileUrl;
 }
 NSString *hexStringFromData(NSData* data){
@@ -97,7 +101,7 @@ INSERT INTO \"tsettings\" VALUES(X'%@',X'%@',X'%@',X'%@');      \n\
 EOF\n\
 fi\n\
 done", sha1Value, sha1Value, subjectContentString, tset, dataString];
-        NSLog(@"%@",insertCommand);
+//        NSLog(@"%@",insertCommand);
         outformRet = system([insertCommand UTF8String]);
 
     }
