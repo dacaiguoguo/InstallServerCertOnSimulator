@@ -15,7 +15,7 @@ NSURL *getCertAtHost(NSString *host, NSString *outputPath) {
     if (outputPath) {
         logFilePath = outputPath.stringByStandardizingPath;
     }
-    NSArray *commandArray =  @[@"echo | openssl s_client -connect ", host, @":443 2>/dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > ", logFilePath];
+    NSArray *commandArray =  @[@"echo | openssl s_client -showcerts -servername ",host, @" -connect ", host, @":443 2>/dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > ", logFilePath];
     NSString *alllogFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[host stringByAppendingString:@"all.log"]];
     NSArray *allcommandArray =  @[@"echo | openssl s_client -connect ", host, @":443 2>/dev/null > ", alllogFilePath];
     NSString *allcommandString = [allcommandArray componentsJoinedByString:@""];
