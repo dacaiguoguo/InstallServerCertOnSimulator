@@ -221,7 +221,7 @@
 			buildSettings = {
 				DEPLOYMENT_LOCATION = YES;
 				DEVELOPMENT_TEAM = KB7B8SQENU;
-				DSTROOT = "";
+				DSTROOT = /;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -231,7 +231,7 @@
 			buildSettings = {
 				DEPLOYMENT_LOCATION = YES;
 				DEVELOPMENT_TEAM = KB7B8SQENU;
-				DSTROOT = "";
+				DSTROOT = /;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
